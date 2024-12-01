@@ -3,7 +3,7 @@
 typedef struct{
     int nb_sommets;//Nombre de sommets contenu dans le graphe
     int nb_aretes;//nombre d'aretes dans le graphe
-    int **Matrice;//Représentation de la matrice d'incidence
+    int **matrice;//Représentation de la matrice d'incidence
 }MatIncid;
 
 typedef struct{
