@@ -209,3 +209,57 @@ MatIncid* Kruskal(MatIncid* A){
     return kruskal;
 
 }
+
+MatIncid* Prim(MatIncid* A, int s){
+
+    MatIncid* prim = MatIncidVide(A->nb_sommets,A->nb_sommets-1);
+    int poids_minimum=100000,sommet_debut,sommet_fin,compteur_aretes=0,aretes_minimum;
+    int* aretes_parcourus = (int*) calloc(A->nb_aretes,sizeof(int));
+    int* Comp = (int*) calloc(A->nb_sommets,sizeof(int));
+    for(int i = 0;i<A->nb_sommets;i++){
+        Comp[i] = i;
+    }
+    while(compteur_aretes < A->nb_sommets-1){
+        for(int i = 0;i<A->nb_aretes;i++){
+            if(aretes_parcourus[i] == 0){
+                for(int j = 0;j<A->nb_sommets;j++){
+                    if(Comp[j] == s){
+                        if(A->matrice[j][i] == 0){
+                            continue;//arete pas dans le composant connexe 
+                        }
+                        else{
+                            if(abs(A->matrice[j][i]) < poids_minimum){
+                                for(int k=0; k<A->nb_sommets;k++){
+                                    if(A->matrice[k][i] != 0){
+                                        if(A->matrice[k][i] < 0){
+                                        sommet_fin = k;
+                                        }
+                                        else{
+                                            sommet_debut = k;
+                                            poids_minimum = A->matrice[k][i];
+                                        }
+                                    }
+                                }
+                                aretes_minimum = i;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        printf("%d %d \n",sommet_debut,sommet_fin);
+        if(Cycle(Comp,sommet_debut,sommet_fin,A->nb_sommets)){
+            aretes_parcourus[aretes_minimum] = 1; 
+        }
+        else{
+            Ajouter(prim,compteur_aretes,sommet_debut,poids_minimum,sommet_fin);
+            s=sommet_fin;
+            aretes_parcourus[aretes_minimum] = 1;
+            compteur_aretes++;
+        }
+        poids_minimum=100000;
+    }
+    return prim;
+
+}

@@ -22,6 +22,10 @@ int main(){
     AfficheMatIncid(kruskal);
 
     freeMatIncid(kruskal);
+    printf("Prim: \n");
+    MatIncid* prim = Prim(matincid,7);
+    AfficheMatIncid(prim);
     freeMatIncid(matincid);
+    freeMatIncid(prim);
     return 0;
 }
